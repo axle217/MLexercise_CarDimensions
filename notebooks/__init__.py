@@ -1,0 +1,1 @@
+{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"mount_file_id":"1vA3oPboFA-UBDKCGgTI8N2Gi-ccixybt","authorship_tag":"ABX9TyPh8Sk+f2MAasPb2dIsRAUS"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[]}
