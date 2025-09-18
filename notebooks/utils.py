@@ -31,3 +31,58 @@ def compare_predictions(y_true, y_pred):
     comparison["Error %"] = comparison["Error"].abs() / comparison["Actual"] * 100
 
     return comparison
+
+
+
+
+import matplotlib.pyplot as plt
+
+def plot_scatter_comparison(
+    dfs, labels, 
+    x_col="", y_col="", 
+    xlabel="", ylabel="", 
+    title="Scatter Plot",
+    xrange=None, yrange=None
+):
+    """
+    Plots scatter plots for multiple DataFrames on the same figure.
+    
+    Parameters:
+        dfs (list): List of pandas DataFrames to plot.
+        labels (list): List of labels for each DataFrame.
+        x_col (str): Column name for x-axis values. Default is "Actual".
+        y_col (str): Column name for y-axis values. Default is "Predicted".
+        xlabel (str): Label for the x-axis.
+        ylabel (str): Label for the y-axis.
+        title (str): Title of the plot.
+        xrange (tuple): (min, max) for x-axis. Default None (auto).
+        yrange (tuple): (min, max) for y-axis. Default None (auto).
+    """
+    plt.figure(figsize=(8, 6))
+    
+    markers = ["o", "v", "s", "x", "D", "^", "<", ">"]  
+    colors = ["red", "black", "blue", "green", "purple", "orange"]
+    
+    for i, df in enumerate(dfs):
+        marker = markers[i % len(markers)]
+        color = colors[i % len(colors)]
+        
+        plt.scatter(df[x_col], df[y_col], 
+                    label=labels[i], 
+                    marker=marker, 
+                    facecolors="none", 
+                    edgecolors=color, 
+                    s=80)
+    
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    
+    if xrange is not None:
+        plt.xlim(xrange)
+    if yrange is not None:
+        plt.ylim(yrange)
+    
+    plt.legend(facecolor='white', edgecolor='black', framealpha=1.0)
+    plt.grid(True, zorder=0)
+    plt.show()
