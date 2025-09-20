@@ -18,11 +18,12 @@ def compare_predictions(y_true, y_pred):
         A DataFrame with columns: Actual, Predicted, Error, Error %.
     """
     # Ensure predictions are 1D
+    y_true_flat = y_true.flatten() if hasattr(y_true, "flatten") else y_true
     y_pred_flat = y_pred.flatten() if hasattr(y_pred, "flatten") else y_pred
 
     # Build comparison DataFrame
     comparison = pd.DataFrame({
-        "Actual": pd.Series(y_true).reset_index(drop=True),
+        "Actual": pd.Series(y_true_flat).reset_index(drop=True),
         "Predicted": pd.Series(y_pred_flat).reset_index(drop=True)
     })
 
@@ -42,7 +43,7 @@ def plot_scatter_comparison(
     x_col="", y_col="", 
     xlabel="", ylabel="", 
     title="Scatter Plot",
-    xrange=None, yrange=None
+    xrange=None, yrange=None, drawline=False
 ):
     """
     Plots scatter plots for multiple DataFrames on the same figure.
@@ -57,6 +58,7 @@ def plot_scatter_comparison(
         title (str): Title of the plot.
         xrange (tuple): (min, max) for x-axis. Default None (auto).
         yrange (tuple): (min, max) for y-axis. Default None (auto).
+        drawline (bool): Draw y=x.
     """
     plt.figure(figsize=(8, 6))
     
@@ -82,6 +84,14 @@ def plot_scatter_comparison(
         plt.xlim(xrange)
     if yrange is not None:
         plt.ylim(yrange)
+    
+    if drawline: 
+        xmin, xmax = plt.xlim()
+        ymin, ymax = plt.ylim()
+        line_min = max(xmin, ymin)
+        line_max = min(xmax, ymax)
+        plt.plot([line_min, line_max], [line_min, line_max],
+             'g--', label="y = x", zorder=4) # r=red, g=green -- dashed line
     
     plt.legend(facecolor='white', edgecolor='black', framealpha=1.0)
     plt.grid(True, zorder=0)
