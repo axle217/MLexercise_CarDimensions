@@ -26,6 +26,8 @@ def main():
     logging.info("Loading dataset...")
     X_train, X_test, y_train, y_test = load_data(Config.DATA_PATH, Config.features, Config.target, Config.TEST_SIZE, Config.RANDOM_SEED)
 
+    print(y_test)
+
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X_train)
 
