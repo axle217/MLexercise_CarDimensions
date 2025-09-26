@@ -1,8 +1,8 @@
-# Setup for Google Colab directories. Comment this out in other environtment.
-import os
-os.chdir('/content/drive/MyDrive/Colab Notebooks/MLexercise_CarDimensions')
-print(os.getcwd())
-###############################################################
+# # Setup for Google Colab directories. Comment this out in other environtment.
+# import os
+# os.chdir('/content/drive/MyDrive/Colab Notebooks/MLexercise_CarDimensions')
+# print(os.getcwd())
+# ###############################################################
 
 from config import Config
 from data.loader import load_data
