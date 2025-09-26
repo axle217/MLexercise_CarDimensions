@@ -6,7 +6,7 @@ print(os.getcwd())
 
 from config import Config
 from data.loader import load_data
-from models.ModelsTrainer import ModelsTrainer as Trainer
+from models.ModelsTrainer import ModelTrainer as Trainer
 from models.evaluator import ModelEvaluator
 import torch
 from sklearn.preprocessing import StandardScaler
@@ -68,7 +68,7 @@ def main():
         # yrange=None,
         drawline=True
     )
-    
+
     logging.info("Pipeline finished successfully.")
 
 
