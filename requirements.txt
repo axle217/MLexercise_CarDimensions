@@ -4,6 +4,7 @@ pandas
 scikit-learn
 torch
 tensorflow
+matplotlib
 
 # Data validation & experiment tracking (optional)
 # great-expectations
