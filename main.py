@@ -40,8 +40,8 @@ def main():
     logging.info("Training model...")
     trainer = Trainer()
     # sklearn_model = trainer.train_sklearn(X_train, y_train)
-    tensorflow_model = trainer.train_tensorflow(X_scaled, y_scaled, epochs=Config.TENSORFLOW_EPOCHS)
-    # pytorch_model = trainer.train_pytorch(X_train_t, y_train_t, epochs=Config.PYTORCH_EPOCHS)
+    # tensorflow_model = trainer.train_tensorflow(X_scaled, y_scaled, epochs=Config.TENSORFLOW_EPOCHS)
+    pytorch_model = trainer.train_pytorch(X_train_t, y_train_t, epochs=Config.PYTORCH_EPOCHS)
 
     # Evaluate model
     logging.info("Evaluating model...")
@@ -49,11 +49,11 @@ def main():
 
     # sk_results = evaluator.evaluate(sklearn_model, X_test, y_test, model_name="RandomForest")
     # print(sk_results.head())
-    tf_results = evaluator.evaluate(tensorflow_model, X_scaled, y_test, model_name="TensorFlow", scaler=scaler_y)
-    print(tf_results.head())
-    # X_test_t = torch.tensor(scaler.transform(X_test), dtype=torch.float32)
-    # pt_results = evaluator.evaluate(pytorch_model, X_test_t, y_test, model_name="PyTorch", scaler=scaler_y)
-    # print(pt_results.head())
+    # tf_results = evaluator.evaluate(tensorflow_model, X_scaled, y_test, model_name="TensorFlow", scaler=scaler_y)
+    # print(tf_results.head())
+    X_test_t = torch.tensor(scaler.transform(X_test), dtype=torch.float32)
+    pt_results = evaluator.evaluate(pytorch_model, X_test_t, y_test, model_name="PyTorch", scaler=scaler_y)
+    print(pt_results.head())
 
     # # Plot results
     # plot_scatter_comparison(
@@ -72,7 +72,8 @@ def main():
 
     # Plot results
     plot_scatter_comparison(
-        dfs=[tf_results],
+        # dfs=[tf_results],
+        dfs=[pt_results],
         labels=["TF Model"],
         x_col="y_true", y_col="y_pred",
         xlabel="Actual",
