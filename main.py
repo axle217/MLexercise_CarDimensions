@@ -7,7 +7,7 @@ print(os.getcwd())
 from config import Config
 from data.loader import load_data
 from models.ModelsTrainer import ModelTrainer as Trainer
-from models.evaluator import ModelEvaluator
+from evaluator.evaluator import ModelEvaluator
 import torch
 from sklearn.preprocessing import StandardScaler
 from helpers.utils import plot_scatter_comparison
