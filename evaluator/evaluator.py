@@ -6,7 +6,7 @@ import torch
 import tensorflow as tf
 
 class ModelEvaluator:
-    def __init__(self, y_true):
+    def __init__(self):
         pass
 
     def _to_numpy(self, preds):
