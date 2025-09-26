@@ -55,11 +55,12 @@ class ModelEvaluator:
             y_true_scaled = scaler.fit_transform(self.y_true.values.reshape(-1, 1))
             y_pred = scaler.inverse_transform(y_pred).ravel()
         else:
+            y_true_scaled = self.y_true
             y_pred = y_pred.ravel()
 
         # --- Metrics ---
         r2 = r2_score(self.y_true, y_pred)
-        mse = mean_squared_error(self.y_true, y_pred) if scaler is not None else mean_squared_error(y_true_scaled, y_pred)
+        mse = mean_squared_error(y_true_scaled, y_pred)
         mape = mean_absolute_percentage_error(self.y_true, y_pred)
 
         # --- Build DataFrame ---
