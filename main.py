@@ -30,7 +30,7 @@ def main():
     X_scaled = scaler.fit_transform(X_train)
 
     scaler_y = StandardScaler()
-    y_scaled = scaler_y.fit_transform(y_train.reshape(-1, 1))
+    y_scaled = scaler_y.fit_transform(y_train.values.reshape(-1, 1))
 
     X_train_t = torch.tensor(X_scaled, dtype=torch.float32)
     y_train_t = torch.tensor(y_scaled, dtype=torch.float32).view(-1, 1)
