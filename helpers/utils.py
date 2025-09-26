@@ -60,7 +60,7 @@ def plot_scatter_comparison(
         yrange (tuple): (min, max) for y-axis. Default None (auto).
         drawline (bool): Draw y=x.
     """
-    plt.figure(figsize=(8, 6))
+    fig = plt.figure(figsize=(8, 6))
     
     markers = ["o", "v", "s", "x", "D", "^", "<", ">"]  
     colors = ["red", "black", "blue", "green", "purple", "orange"]
@@ -96,3 +96,5 @@ def plot_scatter_comparison(
     plt.legend(facecolor='white', edgecolor='black', framealpha=1.0)
     plt.grid(True, zorder=0)
     plt.show()
+    
+    return fig
