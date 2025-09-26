@@ -45,15 +45,18 @@ class ModelEvaluator:
 
         y_pred = self._to_numpy(preds)
 
+        # Here we want to use MSE on scaled y for PyTorch and TensorFlow models
+        # The original y_true is unscaled and blows up for (y_true - y_pred) > 10 
         mse = None
+
         # --- Inverse transform if scaler is provided ---
         if scaler is not None:
-            y_pred = scaler.inverse_transform(y_pred).ravel()
             y_true_scaled = scaler.fit_transform(y_true.values.reshape(-1, 1))
             mse = mean_squared_error(y_true_scaled, y_pred)
+            y_pred = scaler.inverse_transform(y_pred).ravel()
         else:
-            y_pred = y_pred.ravel()
             mse = mean_squared_error(y_true, y_pred)
+            y_pred = y_pred.ravel()
 
         # --- Metrics ---
         r2 = r2_score(y_true, y_pred)

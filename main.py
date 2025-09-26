@@ -11,8 +11,9 @@ from evaluator.evaluator import ModelEvaluator
 import torch
 from sklearn.preprocessing import StandardScaler
 from helpers.utils import plot_scatter_comparison
-
+import matplotlib.pyplot as plt
 import logging
+
 
 logging.basicConfig(
     level=logging.INFO,
