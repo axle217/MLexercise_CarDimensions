@@ -39,7 +39,7 @@ def main():
     logging.info("Training model...")
     trainer = Trainer()
     sklearn_model = trainer.train_sklearn(X_train, y_train)
-    tensorflow_model = trainer.train_tensorflow(X_scaled, y_scaled, epoch_models=Config.TENSORFLOW_EPOCHS)
+    tensorflow_model = trainer.train_tensorflow(X_scaled, y_scaled, epochs=Config.TENSORFLOW_EPOCHS)
     pytorch_model = trainer.train_pytorch(X_train_t, y_train_t, epochs=Config.PYTORCH_EPOCHS)
 
     # Evaluate model
