@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
-class ModelTrainer:
+class ModelsTrainer:
     def __init__(self):
         self.loss_history = []
         self.weight_history = []
