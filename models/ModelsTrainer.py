@@ -2,7 +2,7 @@
 from sklearn.ensemble import RandomForestRegressor
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Input
 import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
