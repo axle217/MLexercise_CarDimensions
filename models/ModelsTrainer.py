@@ -26,9 +26,8 @@ class ModelsTrainer:
 
     def train_tensorflow(self, X_train, y_train, epochs=500):# Model layers and training
         model = Sequential([
-            Dense(256, activation='relu',
-                input_shape=(X_train.shape[1],)
-                ),
+            Input(shape=(X_train.shape[1],)),
+            Dense(256, activation='relu'),
             Dense(128, activation='relu'),
             Dense(64, activation='relu'),
             Dense(1)  # output layer for regression
