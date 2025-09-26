@@ -1,10 +1,16 @@
+# Setup for Google Colab directories. Comment this out in other environtment.
+import os
+os.chdir('/content/drive/MyDrive/Colab Notebooks/MLexercise_CarDimensions')
+print(os.getcwd())
+###############################################################
+
 from config import Config
 from data.loader import load_data
-from models.ModelsTrainer import train_sklearn, train_tensorflow, train_pytorch
-from models.evaluator import evaluate_model
+from models.ModelsTrainer import ModelsTrainer as Trainer
+from models.evaluator import ModelEvaluator
 import torch
-
 from sklearn.preprocessing import StandardScaler
+from helpers.utils import plot_scatter_comparison
 
 import logging
 
@@ -31,19 +37,38 @@ def main():
 
     # Train model
     logging.info("Training model...")
-    model, acc = train_random_forest(
-        X, y,
-        test_size=Config.TEST_SIZE,
-        n_estimators=Config.N_ESTIMATORS,
-        random_state=Config.RANDOM_SEED
-    )
-    logging.info(f"Training completed with accuracy: {acc:.2f}")
+    trainer = Trainer()
+    sklearn_model = trainer.train_sklearn(X_train, y_train)
+    tensorflow_model = trainer.train_tensorflow(X_scaled, y_scaled, epoch_models=Config.TENSORFLOW_EPOCHS)
+    pytorch_model = trainer.train_pytorch(X_train_t, y_train_t, epochs=Config.PYTORCH_EPOCHS)
 
     # Evaluate model
     logging.info("Evaluating model...")
-    metrics = evaluate_model(model, X, y)
-    logging.info(f"Evaluation metrics: {metrics}")
+    evaluator = ModelEvaluator(y_test)
 
+    sk_results = evaluator.evaluate(sklearn_model, X_test, model_name="RandomForest")
+    print(sk_results.head())
+    tf_results = evaluator.evaluate(tensorflow_model, X_scaled, model_name="TensorFlow", scaler=scaler_y)
+    print(tf_results.head())
+    X_test_t = torch.tensor(scaler.transform(X_test), dtype=torch.float32)
+    pt_results = evaluator.evaluate(pytorch_model, X_test_t, model_name="PyTorch", scaler=scaler_y)
+    print(pt_results.head())
+
+    # Plot results
+    plot_scatter_comparison(
+        dfs=[pt_results, tf_results, sk_results],
+        labels=["PyTorch", "TF Model", "sklearn"],
+        x_col="y_true", y_col="y_pred",
+        xlabel="Actual",
+        ylabel="Predicted",
+        title="Model Comparison",
+        xrange=[0, 4500],
+        yrange=[0, 4500],
+        # xrange=None,
+        # yrange=None,
+        drawline=True
+    )
+    
     logging.info("Pipeline finished successfully.")
 
 
