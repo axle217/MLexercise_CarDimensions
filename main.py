@@ -44,14 +44,14 @@ def main():
 
     # Evaluate model
     logging.info("Evaluating model...")
-    evaluator = ModelEvaluator(y_test)
+    evaluator = ModelEvaluator()
 
-    sk_results = evaluator.evaluate(sklearn_model, X_test, model_name="RandomForest")
+    sk_results = evaluator.evaluate(sklearn_model, X_test, y_test, model_name="RandomForest")
     print(sk_results.head())
-    tf_results = evaluator.evaluate(tensorflow_model, X_scaled, model_name="TensorFlow", scaler=scaler_y)
+    tf_results = evaluator.evaluate(tensorflow_model, X_scaled, y_test, model_name="TensorFlow", scaler=scaler_y)
     print(tf_results.head())
     X_test_t = torch.tensor(scaler.transform(X_test), dtype=torch.float32)
-    pt_results = evaluator.evaluate(pytorch_model, X_test_t, model_name="PyTorch", scaler=scaler_y)
+    pt_results = evaluator.evaluate(pytorch_model, X_test_t, y_test, model_name="PyTorch", scaler=scaler_y)
     print(pt_results.head())
 
     # Plot results
