@@ -8,7 +8,7 @@ import tensorflow as tf
 class ModelEvaluator:
     def __init__(self, y_true):
         """
-        Initialize evaluator with ground truth values (scaled or original).
+        Initialize evaluator with ground truth values (original).
         
         Args:
             y_true (array-like): True target values.
@@ -52,7 +52,7 @@ class ModelEvaluator:
 
         # --- Inverse transform if scaler is provided ---
         if scaler is not None:
-            y_true_scaled = scaler.fit_transform(self.y_true)
+            y_true_scaled = scaler.fit_transform(self.y_true.values.reshape(-1, 1))
             y_pred = scaler.inverse_transform(y_pred).ravel()
         else:
             y_pred = y_pred.ravel()
