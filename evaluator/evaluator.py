@@ -52,20 +52,19 @@ class ModelEvaluator:
 
         # --- Inverse transform if scaler is provided ---
         if scaler is not None:
-            y_true_orig = scaler.inverse_transform(self.y_true).ravel()
+            y_true_scaled = scaler.fit_transform(self.y_true)
             y_pred = scaler.inverse_transform(y_pred).ravel()
         else:
-            y_true_orig = self.y_true.ravel()
             y_pred = y_pred.ravel()
 
         # --- Metrics ---
-        r2 = r2_score(y_true_orig, y_pred)
-        mse = mean_squared_error(y_true_orig, y_pred)
-        mape = mean_absolute_percentage_error(y_true_orig, y_pred)
+        r2 = r2_score(self.y_true, y_pred)
+        mse = mean_squared_error(self.y_true, y_pred) if scaler is not None else mean_squared_error(y_true_scaled, y_pred)
+        mape = mean_absolute_percentage_error(self.y_true, y_pred)
 
         # --- Build DataFrame ---
         results = pd.DataFrame({
-            "y_true": y_true_orig,
+            "y_true": self.y_true,
             "y_pred": y_pred
         })
         results["model"] = model_name

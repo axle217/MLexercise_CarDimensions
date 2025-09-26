@@ -67,7 +67,7 @@ def main():
         # xrange=None,
         # yrange=None,
         drawline=True
-    )
+    ).savefig("results/model_comparison.pdf")
 
     logging.info("Pipeline finished successfully.")
 
