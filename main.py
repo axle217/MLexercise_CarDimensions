@@ -70,21 +70,6 @@ def main():
         drawline=True
     ).savefig("results/model_comparison.pdf")
 
-    # # Plot results
-    # plot_scatter_comparison(
-    #     dfs=[tf_results],
-    #     labels=["TF Model"],
-    #     x_col="y_true", y_col="y_pred",
-    #     xlabel="Actual",
-    #     ylabel="Predicted",
-    #     title="Model Comparison",
-    #     xrange=[0, 4500],
-    #     yrange=[0, 4500],
-    #     # xrange=None,
-    #     # yrange=None,
-    #     drawline=True
-    # ).savefig("results/model_comparison.pdf")
-
     logging.info("Pipeline finished successfully.")
 
 
