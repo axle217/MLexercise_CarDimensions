@@ -56,19 +56,20 @@ def main():
     print(pt_results.head())
 
     # Plot results
-    plot_scatter_comparison(
+    Fig_Actual_vs_Predicted = plot_scatter_comparison(
         dfs=[pt_results, tf_results, sk_results],
         labels=["PyTorch", "TF Model", "sklearn"],
         x_col="y_true", y_col="y_pred",
-        xlabel="Actual",
-        ylabel="Predicted",
+        xlabel="Actual Weight (kg)",
+        ylabel="Predicted Weight (kg)",
         title="Model Comparison",
         xrange=[0, 4500],
         yrange=[0, 4500],
         # xrange=None,
         # yrange=None,
         drawline=True
-    ).savefig("results/model_comparison.pdf")
+    )
+    Fig_Actual_vs_Predicted.savefig("results/model_comparison.png")
 
     logging.info("Pipeline finished successfully.")
 
