@@ -44,7 +44,7 @@ class ModelTrainer:
             X_train, y_train,
             epochs=epochs,
             batch_size=32,
-            validation_split=0.2,  # 20% of training data used for validation
+            # validation_split=0.2,  # 20% of training data used for validation
             callbacks=[early_stop],
             verbose=1)
         return model
