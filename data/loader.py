@@ -45,14 +45,14 @@ def auto_clean_string_columns(df):
     return df
 
 
-def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, rename_columns: dict = None):
+def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, rename_columns: dict = None, save_cleaned_data=False, cleaned_data_path="data/cleaned_data.csv"):
     """
     Load dataset from CSV, clean it, and return train/test splits.
     """
     # if path is a folder:  path = "data/"
     # if path is a pattern: path = "data/*.csv"
     files = glob.glob(path)   # <-- expands to a list of CSV files
-    print(files)
+    # print(files)
 
     if len(files) == 0:
         raise FileNotFoundError(f"No files found at: {path}")
@@ -69,7 +69,7 @@ def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, 
     )
 
     # Check for white spaces in label
-    print(merged_data.columns.tolist())
+    # print(merged_data.columns.tolist())
     merged_data.columns = (
         merged_data.columns
         .str.strip()  # Remove leading/trailing whitespace
@@ -88,6 +88,10 @@ def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, 
     merged_data = auto_clean_string_columns(merged_data)
     merged_data = merged_data.drop_duplicates()
     
+    # Save cleaned data to CSV
+    if save_cleaned_data:
+        merged_data.to_csv(cleaned_data_path, index=False)
+
     X = merged_data[features]
     y = merged_data[target]
 
