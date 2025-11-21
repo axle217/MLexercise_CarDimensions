@@ -27,7 +27,7 @@ def main():
     # Load data
     logging.info("Loading dataset...")
     # Cleaning data if not done yet
-    # data_cleaning(Config.DATA_PATH, Config.rename_columns, Config.CLEANED_DATA_PATH)
+    data_cleaning(Config.DATA_PATH, Config.rename_columns, Config.CLEANED_DATA_PATH)
 
     X_train, X_test, y_train, y_test = load_cleaned_data(Config.CLEANED_DATA_PATH, Config.features, Config.target, Config.TEST_SIZE, Config.RANDOM_SEED)
 

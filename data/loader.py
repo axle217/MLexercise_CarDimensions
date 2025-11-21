@@ -40,7 +40,7 @@ def auto_clean_string_columns(df):
                 .str.replace(' ', '', regex=False)
                 .str.replace('-', '', regex=False)
                 .str.replace('.', '', regex=False)
-                # .str.replace('/', '', regex=False)
+                .str.replace('/', '', regex=False)
         )
     return df
 

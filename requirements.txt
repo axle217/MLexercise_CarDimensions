@@ -3,7 +3,7 @@ numpy
 pandas
 scikit-learn
 torch
-tensorflow
+tensorflow>=2.13
 matplotlib
 
 # Data validation & experiment tracking (optional)
