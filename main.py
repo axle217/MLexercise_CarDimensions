@@ -5,8 +5,8 @@
 # ###############################################################
 
 from config import Config
+from data.loader import data_cleaning
 from data.loader import load_cleaned_data
-from data.loader import clean_and_load_data
 from models.ModelsTrainer import ModelsTrainer as Trainer
 from evaluator.evaluator import ModelEvaluator
 import torch
@@ -26,8 +26,10 @@ def main():
 
     # Load data
     logging.info("Loading dataset...")
-    X_train, X_test, y_train, y_test = clean_and_load_data(Config.DATA_PATH, Config.features, Config.target, Config.TEST_SIZE, Config.RANDOM_SEED, Config.rename_columns)
-    # X_train, X_test, y_train, y_test = load_cleaned_data(Config.CLEANED_DATA_PATH, Config.features, Config.target, Config.TEST_SIZE, Config.RANDOM_SEED)
+    # Cleaning data if not done yet
+    # data_cleaning(Config.DATA_PATH, Config.rename_columns, Config.CLEANED_DATA_PATH)
+
+    X_train, X_test, y_train, y_test = load_cleaned_data(Config.CLEANED_DATA_PATH, Config.features, Config.target, Config.TEST_SIZE, Config.RANDOM_SEED)
 
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X_train)

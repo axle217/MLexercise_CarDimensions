@@ -40,14 +40,43 @@ def auto_clean_string_columns(df):
                 .str.replace(' ', '', regex=False)
                 .str.replace('-', '', regex=False)
                 .str.replace('.', '', regex=False)
-                .str.replace('/', '', regex=False)
+                # .str.replace('/', '', regex=False)
         )
     return df
 
-
-def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, rename_columns: dict = None, save_cleaned_data=False, cleaned_data_path="data/cleaned_data.csv"):
+def specific_data_operation(df, source_col='Weight Distribution', target_cols=('Front Weight %', 'Rear Weight %')):
     """
-    Load dataset from CSV, clean it, and return train/test splits.
+    Splits a column with 'front/rear' weight distribution into two float columns.
+    
+    Parameters:
+        df (pd.DataFrame): input dataframe
+        source_col (str): column to split
+        target_cols (tuple): names of the two resulting columns
+    
+    Returns:
+        pd.DataFrame: df with two new columns added
+    """
+    if source_col not in df.columns:
+        raise ValueError(f"Column '{source_col}' not found in DataFrame")
+    
+    # Split column safely
+    split_df = df[source_col].astype(str).str.split('/', expand=True)
+    
+    # Make sure we have exactly 2 columns
+    if split_df.shape[1] != 2:
+        raise ValueError(f"Column '{source_col}' does not have exactly 2 parts after split")
+    
+    # Convert to float
+    split_df = split_df.astype(float)
+    
+    # Assign to target columns
+    df[list(target_cols)] = split_df
+
+    return df
+
+def data_cleaning(path, rename_columns: dict = None, cleaned_data_path="data/cleaned_data.csv"):
+    """
+    Load dataset from CSV, clean it, and save it.
     """
     # if path is a folder:  path = "data/"
     # if path is a pattern: path = "data/*.csv"
@@ -84,19 +113,12 @@ def clean_and_load_data(path, features, target, test_size=0.2, random_state=42, 
     # print(merged_data.columns.tolist())
 
     # Cleaning typos and duplicates
+    merged_data = specific_data_operation(merged_data)
     merged_data = auto_fix_mixed_columns(merged_data)
     merged_data = auto_clean_string_columns(merged_data)
     merged_data = merged_data.drop_duplicates()
     
-    # Save cleaned data to CSV
-    if save_cleaned_data:
-        merged_data.to_csv(cleaned_data_path, index=False)
-
-    X = merged_data[features]
-    y = merged_data[target]
-
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
-
+    return merged_data.to_csv(cleaned_data_path, index=False)
 
 def load_cleaned_data(path, features, target, test_size=0.2, random_state=42):
     """
