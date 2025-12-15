@@ -14,6 +14,6 @@ The data don't contain vehicle types label (SUV, sedan, truck, etc.), so further
 The plots below are still in notebook.
 ![Description](results/Vehicle_Clusters_GMM.png)
 
-![Description](results/model_comparison.png)
+![Description](results/Vehicle_Clusters_tsne_kmean.png)
 
 The vehicle type clustering can be used to classify the power train later on.
