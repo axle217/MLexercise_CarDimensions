@@ -5,7 +5,7 @@ import glob
 import re
 import numpy as np
 
-def auto_fix_mixed_columns(df, threshold=0.7):
+def auto_fix_mixed_columns(df, threshold=0.5):
     for col in df.columns:
         # Skip columns already numeric
         if pd.api.types.is_numeric_dtype(df[col]):
